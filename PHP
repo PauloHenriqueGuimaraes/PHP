@@ -1,0 +1,372 @@
+<?php
+//---------------------------------------------->  SUMARIO   <------------------------------------------->
+    /*
+        2 - echo, print, printf --------------------------------------------------------->
+        3 - variavel, constantes , global ----------------------------------------------->
+        4 - Operadores aritimeticos e logicos ------------------------------------------->
+        5 - if else elseif, switch case ------------------------------------------------->
+        6 - while, do while, for, foreach ----------------------------------------------->
+        7 - funções --------------------------------------------------------------------->
+        8 - tag form, $_POST ------------------------------------------------------------>
+        9 - Arquivos -------------------------------------------------------------------->
+        10 - Imagens --------------------------------------------------------------------->
+        11 - Banco de dados -------------------------------------------------------------->
+
+    */
+//-------------------------------------------------------------------------------------------------------->
+
+
+
+//Aula 2 Exibir ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+    echo "<h1>Exibir PHP</h1>";
+    $num = print("Exibir com print valor e ");
+    echo "$num";
+    printf("<br>printf");
+
+
+ // Aula 3 - Variavel --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+    $nome = "Nome";
+
+    global $idade;
+    $idade = 22;
+
+    define("constante","valor");
+
+    echo "Nome = $nome <br> Idade = $idade <br> const = " . constante . "<br>";
+
+
+ //Aula 4 Operadores  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+/*
+    + -> Adição
+    - -> Subitração
+    / -> Dividir
+    * -> Multiplicação;
+    % -> Porcentagem;
+
+    *= -> Atribuição e diviso
+    += -> Atribuição e multiplicação
+    -= -> Atribuição e subtração
+    /= -> Atribuição e adição
+
+    ++ -> Acresentar
+    -- -> Diminuir
+    =+ -> Atrubuir e acresentar
+
+    == -> igual 
+    != -> Diferente
+    <> -> Diferente
+    <= -> Menor ou igual.
+    >= -> Maior ou igual.
+    === -> Identico 
+    > -> Maior
+    < -> Menor
+
+    BIT a BIT
+
+    & -> E
+    | -> Ou 
+    ^ -> Nao
+*/
+
+ //Aula 5 - if,else, elseif, switch, --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+    if($idade > 18){
+        echo "<br><br>Maior de idade";
+    }elseif($idade < 18){
+        echo "Menor de idade";
+    }else{
+        echo "Define";
+    }
+    
+
+    switch($idade)
+    {
+        case ($idade > 18):
+            echo "<br><br>Maior de idade";
+            break;
+        case ($idade < 18):
+            echo "Menor de idade";
+            break;
+        default:
+            echo "Define";
+    }
+ //aula 6 - while, do while, for, foreach  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+    
+    $i = 10;
+
+    while($i > 1)
+    {
+        $i --;
+        echo "<br>$i";
+    }
+
+    do{
+        $i++;
+        echo "$i <br>";
+    }while($i < 10);
+
+    for($i = 0; $i > 1; $i--){
+        echo "$i<br>";
+    }
+
+    $noms =  array("Paulo", "Paola");
+
+    foreach($noms AS $id => $valor)
+    {
+        echo("<br><br> Id $id Valor:  $valor<br>");
+    }
+
+    /*
+        include
+        include_once
+        require
+        require_once
+    */
+    
+    //Aula 07 - funções  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+    echo "<br>" . soma();
+
+    function soma($numero = 5, $numero2 = 10)
+    {
+        return $numero + $numero2;
+    }
+
+    
+
+    //Aula 08 - Mandando informaçãoes ao php -------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+
+    //Precisamos montar um fomulario html Com a tag <form> Esta tag tem os atributos
+
+    // method -> Define o tipo se e POST ou GET
+    //action -> Define o arquivo php para o envio 
+
+    // Depois basta colocar os input
+
+    //codigo php
+
+    //Aqui faça um if para ve se tem um erro, e atribua a mensagem a esse array
+    $erro = array();
+
+    //Aqui e foreach para poder pagar os valor que vem da lista do method
+    foreach($_POST as $nameDoElemento => $valor){
+        echo $nameDoElemento . $valor;
+
+        if($valor == "")
+        {
+            $erro[] =  "O Campo $nameDoElemento esta vazil";
+        }
+    }
+
+    if(sizeof($erro) == 0){
+        foreach ($_POST as $key => $value) {
+            echo $key . ":" . $value;
+        }   
+    }
+
+    
+    //Aula 9 - Aquivo , file_get_content, file_put_content, file , fclose, fopen, fwrite  ----------------------------------------------------------------------------------------------------------------------------------->
+
+    //estamos passando um arquivo onde ele vai trazer um array
+    $arquivo = file("nome.txt");
+
+    //vai passar por todo array cada array e uma linha do arquivo
+    foreach($arquivo as $valor)
+    {
+        //estamos mostrando a informação.
+        echo $valor;
+    }
+
+
+    //Outro exemplo 
+    $arquivo_ = "nome.pdf";
+
+    header("content-description: file transferer");
+    header("content-application/force-download");
+
+
+    //file_get_contents  |  file_put_contents - gravar string
+
+    $valor = "vender";
+
+    file_put_contents("nomeDoArquivo.txt", $valor);
+
+    //file_get_content
+
+    echo n12br (file_get_contents("nomeDoArquivo.txt"));
+
+    //fopen , fclose, fwrite
+
+    $_conteudo = "conteudo";
+
+    $ponteiro = fopen("lista.txt", "w");
+
+    fwrite($ponteiro, $_conteudo);
+
+    fclose($ponteiro);
+
+
+    //Aula 10 - Imagem --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+    $img = "logo.png";
+     
+    $img1 = @imageCreatefromPng($img);
+
+    header("Content-type: image/png");
+
+    //vamos exibir no navegador.
+    imagePng($img1);
+
+    imageDestroy($img1);
+
+    //Vamos criar imagens e vamos ver um pouco de alguns atributos mas pesquise sobre...
+    ImageCreate();
+
+    // ImageCreateTrueColor
+
+    // ImageColorallocate
+
+    // ImageFilleDellipse
+
+    // ImageFilleDrectangle
+
+    // ImageTTftext
+
+    /*
+        Caso de duvida para criação de imagens basta pesquisar no site do PHP para ve a sua 
+        ultilização
+    */
+
+
+    //Aula 11 - Banco de dados, select, delete, update--------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+    //insert --------------------------------------------------------------------------------------------|
+
+    $_con = new mysqli("localhost","root","","Sistema");
+
+    $sql = "INSERT into ";
+
+    $_result = $_con -> query($sql);
+
+    //update --------------------------------------------------------------------------------------------|
+
+    $_con = new mysqli("localhost","root","","Sistema");
+
+    $sql = "UPDATE";
+
+    $_result = $_con -> query($sql);
+
+    //select --------------------------------------------------------------------------------------------|
+    
+
+    //Conexao do banco de dados Mysql com os campos, localhost, user, senha, banco de dados.
+   $_con = new mysqli("localhost","root","","Sistema");
+ 
+   //Script Sql para consultar no banco de dados
+   $_sql = "SELECT * FROM Contratos";
+
+   //Res recebe o retorno do script select.
+   $_res  = $_con -> query($_sql);
+
+   //criado uma variavel que recebe numeros de linhas
+   $_nr = $_res -> num_rows;
+   
+   //verificação se $_nr e maior do que 0
+   if($_nr > 0)
+   {
+      //criando uma tabela no html 
+      echo "<table border=1>";
+      //criando uma linha no html
+      echo "<tr>";
+
+      //objetivo e criar as colunas com os nomes dos campos
+      //field_count -> refere-se ao numero de colunas que a tabela possue
+      for($_i = 0 ; $_i < $_res -> field_count; $_i ++)
+      {
+         //fetch_field_direct ( posição do array) -> aqui estamos pegando o valor do campo passando o numero da posição.
+         $_recebe = $_res -> fetch_field_direct($_i);
+         //Estamos criando uma coluna obtendo o nome do campo
+         echo "<td>" . $_recebe -> name  .  "</td>";
+      }
+      //finalizando a tag de linha
+      echo "</tr>";
+
+      //fetch_assoc -> recupera linha com um array.
+      //estamos pagando o array res passando para a variavel $_row
+      while($_row = $_res -> fetch_assoc())
+      {
+         echo "<tr>";
+         //listando esse array $_row
+         foreach($_row as $_vlr){
+            //Criando uma coluna com os valor dos campos.
+            echo "<td>" . $_vlr . "</td>";
+         }
+         
+         //finalizando a linha
+         echo "</tr>";
+      }
+
+      //finalizando a tag
+      echo "</table>";
+   }
+
+   // num_rows -> obtem numeros de linhas.
+   // field_count -> Numero de colunas que a tabela possue
+   // fetch_field_direct -> ( posição do array) -> aqui estamos pegando o nome da coluna, tipo passando o numero da posição.
+   // fetch_assoc -> retorna um array de uma linha com valores.
+
+   //exmplos array = nome -> valor, nome -> valor
+
+    //Aula 12 metodo conection ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+    //metodo connection
+    function conectBd($localhost='localhost', $user = 'root', $senha = '', $sgbd = 'banco')
+    {
+        $con = new mysqli($localhost,$user,$senha,$sgbd);
+
+        if($con -> connect_error){die('Error');}
+        
+        return $con
+    } 
+
+    //importar o arquivo php
+    include_once('caminho');
+    
+    $con = conectBd();
+
+
+    //aula 13 Listagem ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+    
+    
+
+
+
+    //aula 14 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+    //Parametro que vai vim do formulario html
+    $opc = $_GET['opc'];
+
+    //Verificando se o opc for diferente de I 
+    if($opc != "I")
+    {
+        $sql = "sql";
+        
+        //Estamos fazendo a nossa consulta e verificando se tem registro caso sim (TRUE)
+        if($res = $_con -> query($sql) == FALSE)
+        {
+            //finalizar a aplicação 
+            die("Sem Registro");
+        }
+
+        //Trasendo um Array com os valores dos campos
+        $_row = $res -> fetch_assoc();
+    }
+
+    //estamos criando um array onde estamos passando um valor para cada campo do array
+    $opcoes = Array('I' => 'Inclucao', 'A' => 'Alteracao');
+
+    echo "<html></html>";
+
+?>
